@@ -5,7 +5,7 @@
         <form action="/blog_posts" method="post" enctype="multipart/form-data">
             {{csrf_field()}}
             <label for="">Название (H1) </label><input type="text" placeholder="Название" name="name" required><br><br>
-            <label for="">URL (ЧПУ) </label><input type="text" placeholder="ЧПУ" name="name" required><br><br>
+            <label for="">URL (ЧПУ) </label><input type="text" placeholder="ЧПУ" name="code" required><br><br>
             <label for="" style="width: 143px;">Опубликовать сейчас </label> <input type="checkbox" class="publish_now"> <input type="text" placeholder="Дата публикации" name="date"><br><br>
             <label for="">Хештеги </label><input type="text" placeholder="Хештеги (через запятую)" name="tags" required><br><br>
             <label for="">TITLE <span class="small_text">(70 символов)</span> </label><input type="text" placeholder="Title" name="title" required><br><br>

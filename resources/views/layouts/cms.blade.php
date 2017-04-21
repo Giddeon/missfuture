@@ -70,7 +70,7 @@
 
             <div class="content-text">
                 @if (\Illuminate\Support\Facades\Auth::user())
-                    @include("cms.".session("role").".top_menu")
+                    @include("cms.".\Illuminate\Support\Facades\Auth::user()->role.".top_menu")
                 @endif
                 @yield('content')
 
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="footer">Best Girl © Конкурс талантов для девушек. Конкурсный сервис женских талантов.</div>
+    <div class="footer">Miss Future © Конкурс талантов для девушек. Конкурсный сервис женских талантов.</div>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

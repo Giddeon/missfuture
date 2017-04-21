@@ -25,9 +25,14 @@ class CmsController extends Controller
 
     public function index()
     {
-        return
-            (Auth::user()) ? $this->{session()->get("role")}() :
-                (!session()->get("role")) ? /*redirect("/cms")*/ : redirect("/");
+        if (Auth::user()) {
+            echo Auth::user()->role;
+            return $this->{Auth::user()->role}();
+        } elseif (session()->get("role")) {
+            return redirect("/cms");
+        } else {
+            return redirect("/");
+        }
 
 
     }

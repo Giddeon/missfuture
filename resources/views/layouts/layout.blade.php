@@ -2,16 +2,16 @@
 <html lang="ru">
 <!-- Head-->
 <head>
-    <title>Женский блог о красоте, здоровье, увлечениях и образе жизни для девушек</title>
+    <title>@yield("title")</title>
     <!-- Main Meta information-->
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
-    <meta name="keywords" content="best girl, блог, женский журнал, красота, здоровье, образ жизни, блог для девушек">
+    <meta name="keywords" content="@yield("keywords")">
     <meta name="description"
-          content="Best Girl — женский блог о красоте, здоровье, увлечениях и образе жизни для девушек">
-    <meta name="author" content="Best Girl">
+          content="@yield("description")">
+    <meta name="author" content="Miss Future">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-touch-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-touch-icon-72x72.png">
@@ -26,8 +26,8 @@
     <link rel="icon" type="image/png" href="/img/favicon/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="/img/favicon/favicon-16x16.png" sizes="16x16">
     <link rel="shortcut icon" href="/fav.ico">
-    <meta name="apple-mobile-web-app-title" content="Женский блог Best Girl">
-    <meta name="application-name" content="Женский блог Best Girl">
+    <meta name="apple-mobile-web-app-title" content="Женский блог Miss Future">
+    <meta name="application-name" content="Женский блог Miss Future">
     <link rel="stylesheet" href="/css/cssmin.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
@@ -36,9 +36,9 @@
 <header class="header">
     <div class="header__inner">
         <div class="header__slogan">
-            <a href="index.html" title="Вернуться на главную страницу блога Best Girl">
+            <a href="/" title="Вернуться на главную страницу блога Miss Future">
                 <img src="/img/svg/logo.svg"
-                     alt="Best Girl: женский блог о красоте, здоровье, увлечениях и образе жизни для девушек">
+                     alt="Miss Future: женский блог о красоте, здоровье, увлечениях и образе жизни для девушек">
             </a>
         </div>
         <div class="header__nav">
@@ -46,16 +46,16 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a class="nav__link" href="index.html">Женский блог</a>
+                        <a class="nav__link" href="/">Женский блог</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="page.html">Популярное</a>
+                        <a class="nav__link" href="/?order=popularity">Популярное</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="page-subscribe.html">Подписка</a>
+                        <a class="nav__link" href="/">Подписка</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="page-about.html">О&nbsp;блоге</a>
+                        <a class="nav__link" href="/about">О&nbsp;блоге</a>
                     </li>
                 </ul>
                 <div class="nav__hamburger">
@@ -72,7 +72,7 @@
 </header>
 <div class="page page--index">
     <!-- Sidebar-->
-    @include('layouts.sidebar');
+    @include('layouts.sidebar')
     <!-- Sidebar-->
     <main class="main" role="main">
         @yield('content')
@@ -81,7 +81,7 @@
 <!-- Footer-->
 <footer class="footer">
     <div class="footer__inner">
-        <div class="copyright">2017&nbsp;©&nbsp;Best&nbsp;Girl. <strong>Женский блог</strong><span class="hidden"> о красоте, здоровье, увлечениях</span>.
+        <div class="copyright">2017&nbsp;©&nbsp;Miss&nbsp;Future. <strong>Женский блог</strong><span class="hidden"> о красоте, здоровье, увлечениях</span>.
         </div>
     </div>
 </footer>

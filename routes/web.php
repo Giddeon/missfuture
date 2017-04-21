@@ -22,6 +22,10 @@ Route::get('/posts/{post}', [
     "uses" => "BlogPostsController@detail",
     "as" => "blog_post"
 ]);
+Route::get('/posts/delete/{post}', [
+    "uses" => "BlogPostsController@delete",
+    "as" => "deletePost"
+]);
 Route::get('/cms/posts/{post}', [
     "uses" => "CmsController@editPost",
     "as" => "edit_post"
@@ -63,7 +67,9 @@ Route::post('/blog_posts/{id}', [
     "as" => "blog_posts_edit"
 ]);
 
-
+Route::get('/about', function () {
+    return view("blog.about");
+});
 Route::get('/testVK', [
     "uses" => "BlogPostsController@vk",
     "as" => "vk"

@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\BlogPostsCategories;
-use Illuminate\Http\Request;
 use App\BlogPosts;
-use App\User;
+use App\BlogPostsCategories;
 use App\Likes;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use BW\Vkontakte;
+use Illuminate\Support\Facades\Storage;
 
 class BlogPostsController extends Controller
 {
@@ -19,11 +16,20 @@ class BlogPostsController extends Controller
     public function index($category = false)
     {
         if (Auth::user()) {
+
+            $order = "id";
+            if (request("order") == "popularity") {
+                $order = "likes";
+            } elseif (request("order") == "popularity") {
+
+            }
             if ($category) {
                 $id = BlogPostsCategories::where('code', $category)->first()->id;
                 $posts = BlogPosts::where('blog_posts_categories_id', $id)->get();
+            } elseif (request("tag")) {
+                $posts = BlogPosts::where('tags', 'like', "%" . request("tag") . "%")->get();
             } else {
-                $posts = BlogPosts::all();
+                $posts = BlogPosts::orderBy($order, "desc")->get();
             }
             return view("blog.first", ["posts" => $posts]);
         } else {
@@ -48,16 +54,19 @@ class BlogPostsController extends Controller
 
     public function create()
     {
-        Storage::put(
-            'blog_pics/' . request("code") . "_" . request()->file('picture')->getClientOriginalName(),
-            file_get_contents(request()->file('picture')->getRealPath())
-        );
-
+        $pic_name = "";
+        if (request()->file('picture')) {
+            $pic_name = request("code") . "_" . request()->file('picture')->getClientOriginalName();
+            Storage::put(
+                'blog_pics/' . $pic_name,
+                file_get_contents(request()->file('picture')->getRealPath())
+            );
+        }
         BlogPosts::create([
             "name" => request("name"),
-            "code" => request("code"),
-            "user_id" => Auth::user()->id,
-            "picture" => request("code") . "_" . request()->file('picture')->getClientOriginalName(),
+            "code" => date("Y-m-d") . "-" . request("code"),
+            "user_id" => 5,
+            "picture" => $pic_name,
             "tags" => request("tags"),
             "date" => (request("date")) ? strtotime(request("date")) : date("Y-m-d H:i:s"),
             "blog_posts_categories_id" => request("category"),
@@ -66,6 +75,12 @@ class BlogPostsController extends Controller
             "preview_text" => request("preview_text"),
             "text" => request("text")
         ]);
+
+        $res = file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/sitemap.xml", str_replace("</urlset>", "<url>
+        <loc>http://missfuture.ru/posts/" . date("Y-m-d") . "-" . request("code") . "</loc>
+        <priority>1</priority>
+    </url></urlset>", file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/sitemap.xml")));
+//        dd(file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/sitemap.xml"));
         return redirect("/cms/home");
     }
 
@@ -75,7 +90,7 @@ class BlogPostsController extends Controller
         $fields = [
             "name" => request("name"),
             "code" => request("code"),
-            "user_id" => Auth::user()->id,
+            "user_id" => 5,
             "tags" => request("tags"),
             "date" => (request("date")) ? request("date") : date("Y-m-d H:i:s"),
             "blog_posts_categories_id" => request("category"),
@@ -96,12 +111,18 @@ class BlogPostsController extends Controller
         return redirect("/cms/home");
     }
 
+    public function delete(BlogPosts $post)
+    {
+        $post->delete();
+        return redirect("/cms/home");
+    }
+
     public function vk()
     {
 
         $accessToken = 'a91d85326452da815ccc0cb2c55f52717eb0fe61db4b1ade68abc16de403b184cb2d4f4bc378054729f05';
         $vkAPI = new \BW\Vkontakte(['access_token' => $accessToken]);
-        $publicID = 29901857;
+        $publicID = 145247465;
 
         if ($vkAPI->postToPublic($publicID, "Привет!", $_SERVER["DOCUMENT_ROOT"] . '/img/bestgirl.png', ['вконтакте api', 'автопостинг'])) {
 

@@ -1,5 +1,7 @@
 @extends('layouts.layout')
-
+@section('title','Женский блог о красоте, здоровье, увлечениях и образе жизни для девушек')
+@section('description','Miss Future — женский блог о красоте, здоровье, увлечениях и образе жизни для девушек')
+@section('keywords','Miss Future, блог, женский журнал, красота, здоровье, образ жизни, блог для девушек')
 @section('title')
     Женский блог о красоте, здоровье, увлечениях и образе жизни для девушек
 @endsection
@@ -8,16 +10,16 @@
 
     <!-- Sorting-->
     <section class="sorting">
-        <span class="sorting__text">Актуальные записи женского блога Best Girl:</span>
+        <span class="sorting__text">Актуальные записи женского блога Miss Future:</span>
         <ul class="sorting__list">
             <li class="sorting__item">
-                <a href="javascript:void(0);">популярное</a>
+                <a href="?order=popularity">популярное</a>
             </li>
-            <li class="sorting__item sorting__item--active">
-                <a href="javascript:void(0);">по интересам</a>
-            </li>
+            {{--<li class="sorting__item sorting__item--active">--}}
+                {{--<a href="javascript:void(0);">по интересам</a>--}}
+            {{--</li>--}}
             <li class="sorting__item">
-                <a href="javascript:void(0);">новые записи</a>
+                <a href="/">новые записи</a>
             </li>
         </ul>
     </section>
@@ -41,11 +43,11 @@
                 <ul class="post-tags">
                     @foreach(explode(",",$item->tags) as $tag)
                         <li class="post-tags__item">
-                            <a href="#" itemprop="articleSection">{{$tag}}</a>
+                            <a href="?tag={{$tag}}" itemprop="articleSection">{{$tag}}</a>
                         </li>
                     @endforeach
                 </ul>
-                <div class="post__excerpt">{!! $item->text !!}
+                <div class="post__excerpt">{!! $item->preview_text !!}
                 </div>
                 <div class="control-panel">
                     <a class="btn btn--more" href="/posts/{{$item->code}}">Читать дальше</a>
@@ -68,34 +70,34 @@
 
     </div>
     <!-- Pagination-->
-    <section class="pagination">
-        <div class="pagination__inner">
-            <span class="pagination__page">Страница</span>
-            <li class="pagination__item">
-                <a href="page.html" rel="prev">Назад</a>
-            </li>
-            <ul class="pagination__list">
-                <li class="pagination__item">
-                    <a href="page.html" rel="canonical">1</a>
-                </li>
-                <li class="pagination__item">
-                    <a href="page.html">2</a>
-                </li>
-                <li class="pagination__item pagination__item--active">
-                    <a href="page.html">3</a>
-                </li>
-                <li class="pagination__item">
-                    <a href="page.html">4</a>
-                </li>
-                <li class="pagination__item">
-                    <a href="page.html">5</a>
-                </li>
-                <li class="pagination__item">
-                    <a href="page.html" rel="next">Вперед</a>
-                </li>
-            </ul>
-            <a class="pagination__back up" href="page.html">Вернуться в начало</a>
-        </div>
-    </section>
+    {{--<section class="pagination">--}}
+        {{--<div class="pagination__inner">--}}
+            {{--<span class="pagination__page">Страница</span>--}}
+            {{--<li class="pagination__item">--}}
+                {{--<a href="page.html" rel="prev">Назад</a>--}}
+            {{--</li>--}}
+            {{--<ul class="pagination__list">--}}
+                {{--<li class="pagination__item  pagination__item--active">--}}
+                    {{--<a href="page.html" rel="canonical">1</a>--}}
+                {{--</li>--}}
+                {{--<li class="pagination__item">--}}
+                    {{--<a href="page.html">2</a>--}}
+                {{--</li>--}}
+                {{--<li class="pagination__item">--}}
+                    {{--<a href="page.html">3</a>--}}
+                {{--</li>--}}
+                {{--<li class="pagination__item">--}}
+                    {{--<a href="page.html">4</a>--}}
+                {{--</li>--}}
+                {{--<li class="pagination__item">--}}
+                    {{--<a href="page.html">5</a>--}}
+                {{--</li>--}}
+                {{--<li class="pagination__item">--}}
+                    {{--<a href="page.html" rel="next">Вперед</a>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
+            {{--<a class="pagination__back up" href="page.html">Вернуться в начало</a>--}}
+        {{--</div>--}}
+    {{--</section>--}}
 
 @endsection
