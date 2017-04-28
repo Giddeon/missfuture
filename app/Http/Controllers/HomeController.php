@@ -28,7 +28,7 @@ class HomeController extends Controller
         if (Auth::user() && !session()->has("role")) {
             session(["role" => Auth::user()->role]);
         }
-        return redirect("/cms/home");
+//        return redirect("/cms/home");
 
     }
 }

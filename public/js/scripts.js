@@ -16,6 +16,9 @@ $(document).ready(function () {
         })
     });
 
+    if ($(".categories__link.current").length && window.outerWidth<=768) {
+        $(".cat-hamburger .rubric_name").text($(".categories__link.current .rubric_name").text());
+    }
 
     /* Hamburger main nav */
     $('.main-hamburger').click(function (e) {

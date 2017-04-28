@@ -29,6 +29,7 @@
     <meta name="apple-mobile-web-app-title" content="Женский блог Miss Future">
     <meta name="application-name" content="Женский блог Miss Future">
     <link rel="stylesheet" href="/css/cssmin.css">
+    <link rel="stylesheet" href="/css/auth.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
@@ -46,16 +47,16 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a class="nav__link" href="/">Женский блог</a>
+                        <a class="nav__link @if (request()->url()=="https://missfuture.ru" && request("order")=="") current @endif" href="/">Женский блог</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/?order=popularity">Популярное</a>
+                        <a class="nav__link @if (request("order")=="popularity") current @endif" href="/?order=popularity">Популярное</a>
                     </li>
+                    {{--<li class="nav__item">--}}
+                    {{--<a class="nav__link" href="/">Подписка</a>--}}
+                    {{--</li>--}}
                     <li class="nav__item">
-                        <a class="nav__link" href="/">Подписка</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__link" href="/about">О&nbsp;блоге</a>
+                        <a class="nav__link @if (request()->url()=="https://missfuture.ru/blog") current @endif" href="/blog">О&nbsp;блоге</a>
                     </li>
                 </ul>
                 <div class="nav__hamburger">
@@ -63,17 +64,28 @@
                 </div>
             </nav>
         </div>
+        <div class="header__user">
+            @if(\Illuminate\Support\Facades\Auth::user())
+                <a class="username" href="javascript:void(0)">{{@\Illuminate\Support\Facades\Auth::user()->name}}</a>
+            @endif
+            <a @if(\Illuminate\Support\Facades\Auth::user()) onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" @else href="/blog/login" @endif><img src="/img/svg/enter-icon.svg" alt="Вход"
+                                       title="Авторизация для подписчиков блога" width="18"></a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+        </div>
         <div class="header__search">
-            <form id="head__search">
-                <input type="search" placeholder="Поиск по сайту">
+            <form id="head__search" action="/search">
+                <input type="search" name="q" placeholder="Поиск по сайту">
             </form>
         </div>
     </div>
 </header>
 <div class="page page--index">
     <!-- Sidebar-->
-    @include('layouts.sidebar')
-    <!-- Sidebar-->
+@include('layouts.sidebar')
+<!-- Sidebar-->
     <main class="main" role="main">
         @yield('content')
     </main>
@@ -85,6 +97,36 @@
         </div>
     </div>
 </footer>
-<script src="/js/scripts.js"></script>
+<script src="/js/scripts.js?123123"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript"> (function (d, w, c) {
+        (w[c] = w[c] || []).push(function () {
+            try {
+                w.yaCounter44359942 = new Ya.Metrika({
+                    id: 44359942,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true,
+                    webvisor: true,
+                    trackHash: true
+                });
+            } catch (e) {
+            }
+        });
+        var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () {
+            n.parentNode.insertBefore(s, n);
+        };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else {
+            f();
+        }
+    })(document, window, "yandex_metrika_callbacks"); </script>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/44359942" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript> <!-- /Yandex.Metrika counter -->
 </body>
 </html>

@@ -14,6 +14,10 @@ Route::get('/', [
     "uses" => "BlogPostsController@index",
     "as" => "blog_posts"
 ]);
+Route::get('/search', [
+    "uses" => "BlogPostsController@search",
+    "as" => "blogSearch"
+]);
 Route::get('/category/{category}', [
     "uses" => "BlogPostsController@index",
     "as" => "blog_posts_by_category"
@@ -67,14 +71,29 @@ Route::post('/blog_posts/{id}', [
     "as" => "blog_posts_edit"
 ]);
 
-Route::get('/about', function () {
+Route::get('/blog', function () {
     return view("blog.about");
 });
 Route::get('/testVK', [
     "uses" => "BlogPostsController@vk",
     "as" => "vk"
 ]);
+Route::get('/testFB', [
+    "uses" => "BlogPostsController@fb",
+    "as" => "fb"
+]);
 
+Route::get('/facebook/callback', [
+    "uses" => "BlogPostsController@fb",
+    "as" => "fb"
+]);
+
+
+Route::get('/blog/login', [
+    "uses" => "AuthController@login",
+    "as" => "login"
+]);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::post('ulogin', 'ULoginController@login');

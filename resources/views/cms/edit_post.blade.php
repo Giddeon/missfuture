@@ -7,11 +7,11 @@
             {{csrf_field()}}
             <label for="">Название (H1) </label><input type="text" placeholder="Название" value="{{$post->name}}" name="name" required><br><br>
             <label for="">URL (ЧПУ) </label><input type="text" placeholder="ЧПУ" value="{{$post->code}}" name="code" required><br><br>
-            <label for="" style="width: 150px;">Опубликовать сейчас </label> <input type="checkbox" class="publish_now"> <input type="text" value="{{$post->date}}" placeholder="Дата публикации" name="date"><br><br>
+            <label for="" style="width: 150px;">Опубликовать сейчас </label> <input type="checkbox" class="publish_now"> <input type="text" value="{{$post->date}}" class="publish_date" placeholder="Дата публикации" name="date"><br><br>
             <label for="">Хештеги </label><input type="text" placeholder="Хештеги (через запятую)" name="tags" value="{{$post->tags}}" required><br><br>
             <label for="">TITLE <span class="small_text">(70 символов)</span> </label><input type="text" value="{{$post->title}}" placeholder="Title" name="title" required><br><br>
             <label for="" style="position: relative; top: -20px;">Description </label>
-            <textarea rows="2" style="width: 500px;" placeholder="Description" name="description" required>{{$post->description}}</textarea><br><br>
+            <textarea rows="2" style="width: 500px;" placeholder="Description" maxlength="250" name="description" required>{{$post->description}}</textarea><br><br>
             <label for="">Категория </label><select name="category" id="" required>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}" @if($post->blog_posts_categories_id==$category->id) selected @endif>{{$category->name}}</option>
@@ -31,17 +31,14 @@
 @endsection
 @section("scripts")
     {{--<script src="/js/tinymce/tinymce.min.js"></script>--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
-
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     <script type="application/javascript" src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
 
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
 
-        $(function () {
 
-        });
-    </script>
     <script>
         $(document).ready(function () {
             $(".publish_now").change(function () {
@@ -51,13 +48,16 @@
                     $(this).next().removeAttr("disabled");
                 }
             });
-        });
-
-        $('#summernote').summernote({
-            height: 300,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: true                  // set focus to editable area after initializing summernote
+            $.datetimepicker.setLocale('ru');
+            $( ".publish_date" ).datetimepicker({
+                format: 'Y-m-d H:i:s'
+            });
+            $('#summernote').summernote({
+                height: 300,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: true                  // set focus to editable area after initializing summernote
+            });
         });
 
         $('#summernote').summernote('code', '{!! preg_replace("/('|\"|\r?\n)/", '',html_entity_decode($post->text)) !!}');

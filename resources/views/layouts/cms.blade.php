@@ -10,7 +10,7 @@
 
 <div class="header clearfix">
     <div class="wrapper">
-        <div class="logo"><a href="#"><img src="/img/bestgirl.png" alt="" width="101" height="20"></a></div>
+        <div class="logo"><a href="/"><img src="/img/svg/logo.svg" alt="" width="101" height="20"></a></div>
     </div>
 </div>
 <div class="wrapper">

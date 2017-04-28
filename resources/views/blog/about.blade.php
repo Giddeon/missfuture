@@ -59,7 +59,7 @@
                 <h2 style="font-family:Arial;font-size: 17px;color:#ba2544">Автор женского блога Miss Future</h2>
                 <p>Автор блога — Александра Полякова.<br>Связаться с автором можно по электронной почте: <a
                             href="mailto:author@missfuture.ru" title="Написать автору женского блога Miss Future"
-                            class="context">author@bestgirl.su</a>.<br>
+                            class="context">author@missfuture.su</a>.<br>
                     <small><span style="color:#999">Ответ на ваш запрос поступит по мере возможности.</span></small>
                 </p>
                 <hr size="1" color="#ececec" width="100%" style="margin:20px 0 20px 0">

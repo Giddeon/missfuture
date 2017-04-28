@@ -26,7 +26,6 @@ class CmsController extends Controller
     public function index()
     {
         if (Auth::user()) {
-            echo Auth::user()->role;
             return $this->{Auth::user()->role}();
         } elseif (session()->get("role")) {
             return redirect("/cms");
@@ -56,8 +55,12 @@ class CmsController extends Controller
     {
         $posts = new BlogPosts;
 //        dd($posts->orderBy("id", "desc")->get()->toArray());
-        return view("cms.posts", ["posts" => $posts->orderBy("id", "desc")->get()]);
+        return view("cms.posts", ["posts" => $posts->orderBy("id", "desc")->paginate(20)]);
     }
 
+
+    private function user() {
+        return redirect("/");
+    }
 
 }
